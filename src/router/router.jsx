@@ -3,7 +3,10 @@ import {
 } from "react-router";
 import RootLayout from "../Layout/RootLayout";
 import Home from "../pages/Shared/Home/Home";
-
+import LostFound from "../pages/Shared/LostFound";
+import AddItems from "../pages/Shared/AddItems";
+import MyItems from "../pages/Shared/MyItems";
+import RecoveredItems from "../pages/Shared/RecoveredItems";
 
 
 const router = createBrowserRouter([
@@ -15,6 +18,22 @@ const router = createBrowserRouter([
       index: true,
       Component:Home,
       },
+      {
+    path: "LostFound",
+    Component:LostFound,
+      },
+      {
+        path: "AddItems",
+        Component:AddItems,
+      },
+      {
+        path: "MyItems",
+        Component:MyItems,
+      },
+      {
+        path: "RecoveredItems",
+        Component:RecoveredItems,
+      }
     ],
   },
 ]);

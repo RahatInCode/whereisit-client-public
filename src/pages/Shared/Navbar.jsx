@@ -7,8 +7,9 @@ const Navbar = () => {
     const links = <>
     <li><NavLink to="/">Home</NavLink></li>
     <li><NavLink to="/LostFound">Lost & Found Items</NavLink></li>
-    <li><NavLink to="/">Home</NavLink></li>
-    <li><NavLink to="/">Home</NavLink></li>
+    <li><NavLink to="/AddItems">Add Items</NavLink></li>
+    <li><NavLink to="/Myitems">My Items</NavLink></li>
+    <li><NavLink to="/recovereditems">Recovered Items</NavLink></li>
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm ">
