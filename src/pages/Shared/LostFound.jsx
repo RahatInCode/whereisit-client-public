@@ -1,11 +1,15 @@
 import React from 'react';
+import LostFoundItems from '../../components/LostFoundItems';
 
 const LostFound = () => {
+    
     return (
         <div>
-            <h1>ihjhdifhahfiahdf</h1>
+            <LostFoundItems></LostFoundItems>
         </div>
     );
 };
 
 export default LostFound;
+
+
