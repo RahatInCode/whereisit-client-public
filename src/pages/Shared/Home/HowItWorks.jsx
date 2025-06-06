@@ -26,7 +26,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="bg-white py-12 px-6 md:px-12 lg:px-20">
+    <section className="bg-emerald-50  py-12 px-6 md:px-12 lg:px-20">
       <div className="max-w-5xl mx-auto text-center">
         <h2 className="text-3xl font-bold text-gray-900 mb-4">How It Works</h2>
         <p className="text-gray-600 mb-10">Simple steps to find or return lost items</p>

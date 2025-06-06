@@ -22,9 +22,9 @@ const [searchQuery, setSearchQuery] = useState('');
     }, []);
 
     return (
-        <div>
+        <div className='bg-emerald-50 min-h-screen'>
            
-             <h1 className="text-3xl font-bold text-center my-4">Lost and Found Items</h1>
+             <h1 className="text-3xl font-bold text-center ">Lost and Found Items</h1>
             
            <Lottie loop={true} autoplay={true} animationData={animationData} className="w-96 mx-auto mb-8">
 

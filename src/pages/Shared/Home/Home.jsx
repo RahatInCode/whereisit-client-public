@@ -6,7 +6,7 @@ import FramerMotion from './FramerMotion';
 
 const Home = () => {
     return (
-        <div>
+        <div className='bg-emerald-50 min-h-screen'>
            <Banner></Banner>
            <div>
                 <h1 className="text-5xl font-bold text-center my-10">Welcome to Our Community!</h1>

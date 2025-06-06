@@ -8,7 +8,7 @@ import {
 
 const Stats = () => {
   return (
-    <section className="py-10 bg-white">
+    <section className="py-10 bg-emerald-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl font-bold text-gray-800 mb-8">Trusted By Thousands</h2>
 
