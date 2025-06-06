@@ -1,38 +1,65 @@
-const ItemsDetails = ({ items }) => {
-  if (!items) {
-    return <div>Loading...</div>;
-  }
+import React from 'react';
+import { useLoaderData } from 'react-router';
 
+const ItemsDetails = () => {
   const {
     title,
     description,
     category,
     imageURL,
     status,
-    location: { type: locationType, coordinates: [longitude, latitude] } = {},
-  } = items;
+    location: { coordinates: [longitude, latitude] } = {},
+    date,
+    reporterName,
+    email,
+  } = useLoaderData() || {};
 
   return (
-    <div className="hero min-h-screen">
-      <div className="hero-content flex-col lg:flex-row">
-        <img
-          src={imageURL || "https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"}
-          className="max-w-sm rounded-lg shadow-2xl"
-        />
-        <div>
-          <h1 className="text-5xl font-bold">{title || "Unknown Title"}</h1>
-          <p className="py-6">{description || "No description available."}</p>
-            <p className="text-lg font-semibold">Category: {category || "Uncategorized"}</p>
-            <p className="text-lg font-semibold">Status: {status || "Unknown"}</p>
-            <p className="text-lg font-semibold">
-                Location: {locationType || "Unknown"} (Lat: {latitude?.toFixed(3) || "N/A"}, Long: {longitude?.toFixed(3) || "N/A"})
-            </p>
-          <div className="card-actions mt-4">
-            <button className="btn btn-secondary mr-2">Contact Owner</button>
-            <button className="btn btn-accent">Report Issue</button>
-            </div>
-          <button className="btn btn-primary">Get Started</button>
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-2xl shadow-md mt-10 flex flex-col md:flex-row gap-6">
+      <img
+        src={imageURL}
+        alt={title}
+        className="w-full md:w-1/2 rounded-xl object-cover"
+      />
+      <div className="flex flex-col gap-3">
+        <span className={`text-sm font-semibold px-2 py-1 rounded-full w-fit ${status === 'Lost' ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}`}>
+          {status}
+        </span>
+        <h2 className="text-2xl font-bold">{title}</h2>
+        <p className="text-gray-600">{description}</p>
+        <div className="flex items-center gap-2 text-gray-700">
+          <i className="fas fa-map-marker-alt"></i>
+          <span>{`Lat: ${latitude}, Long: ${longitude}`}</span>
         </div>
+        <div className="flex items-center gap-2 text-gray-700">
+          <i className="fas fa-calendar-alt"></i>
+          <span>{new Date(date).toLocaleDateString()}</span>
+        </div>
+        <div className="flex items-center gap-2 text-gray-700">
+          <i className="fas fa-user"></i>
+          <span>{reporterName}</span>
+        </div>
+        <div className="flex items-center gap-2 text-gray-700">
+          <i className="fas fa-envelope"></i>
+          <a href={`mailto:${email}`} className="underline text-blue-600">{email}</a>
+        </div>
+        <span className="text-sm inline-block bg-gray-200 text-gray-800 px-2 py-1 rounded-full mt-2">
+          {category}
+        </span>
+      
+          {/* You can open the modal using document.getElementById('ID').showModal() method */}
+<button className="btn" onClick={()=>document.getElementById('my_modal_3').showModal()}>open modal</button>
+<dialog id="my_modal_3" className="modal">
+  <div className="modal-box">
+    <form method="dialog">
+      {/* if there is a button in form, it will close the modal */}
+      <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <h3 className="font-bold text-lg">Hello!</h3>
+    <p className="py-4">Press ESC key or click on ✕ button to close</p>
+  </div>
+</dialog>
+        
       </div>
     </div>
   );
