@@ -8,7 +8,7 @@ import AddItems from "../pages/Shared/AddItems";
 import MyItems from "../pages/Shared/MyItems";
 import ItemsDetails from "../components/ItemsDetails";
 import RecoveredItems from "../pages/Shared/RecoveredItems";
-
+import ErrorPage from "../components/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +38,10 @@ const router = createBrowserRouter([
       {
         path:"items/:id",
         Component:ItemsDetails,
+      },
+      {
+        path:"*",
+        Component:ErrorPage,
       }
     ],
   },
