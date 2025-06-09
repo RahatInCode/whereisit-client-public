@@ -1,4 +1,7 @@
 import React from "react";
+import Lottie from "lottie-react";
+import animationData from '../assets/Animation - 1749125602040.json'
+
 
 const ErrorPage = () => {
   const handleGoHome = () => {
@@ -7,8 +10,12 @@ const ErrorPage = () => {
   };
 
   return (
+    
     <div style={styles.container}>
       <div style={styles.content}>
+        <Lottie loop={true} autoplay={true} animationData={animationData}>
+
+           </Lottie>
         <h1 style={styles.title}>404</h1>
         <p style={styles.subtitle}>Oops! You lost your way in WhereIsIt.</p>
         <p style={styles.text}>

@@ -1,9 +1,37 @@
-import React from 'react';
+import React, { use, useState } from 'react';
 import { Plus } from 'lucide-react'; 
+import DatePicker from 'react-datepicker';
+import { useParams } from 'react-router';
+
+
 
 const AddItems = () => {
+const {id: itemId} = useParams
+
+
+
+
+
+    const handleFormData = (e) =>{
+        e.preventDefault();
+        const form = e.target;
+        const type = form.type.value;
+        const title = form.title.value;
+        const description = form.description.value;
+        const category = form.category.value;
+        const date = form.date.value;
+        const location = form.location.value;
+        const name = form.name.value;
+        const email = form.email.value;
+        const imageUrl = form.imageUrl.value;
+
+        console.log(type,title,description,category,date,location,name,email,imageUrl);
+        
+    }
+     const [date, setDate] = useState(new Date());
     return (
-        <div className="bg-emerald-50 min-h-screen flex items-center justify-center p-6">
+    <form onSubmit={handleFormData}>
+            <div className="bg-emerald-50 min-h-screen flex items-center justify-center p-6">
             <div className="w-full max-w-2xl bg-white shadow-md rounded-xl p-8 space-y-6">
 
                 <div>
@@ -14,7 +42,7 @@ const AddItems = () => {
                 {/* Type */}
                 <div>
                     <label className="block font-semibold mb-1">Type</label>
-                    <select defaultValue="" className="select select-bordered w-full">
+                    <select name='type' defaultValue="" className="select select-bordered w-full">
                         <option disabled value="">Select Type</option>
                         <option>Lost</option>
                         <option>Found</option>
@@ -24,19 +52,19 @@ const AddItems = () => {
                 {/* Title */}
                 <div>
                     <label className="block font-semibold mb-1">Title</label>
-                    <input type="text" className="input input-bordered w-full" placeholder="e.g. Lost Wallet at Park" />
+                    <input name='title' type="text" className="input input-bordered w-full" placeholder="e.g. Lost Wallet at Park" />
                 </div>
 
                 {/* Description */}
                 <div>
                     <label className="block font-semibold mb-1">Description</label>
-                    <textarea className="textarea textarea-bordered w-full h-24" placeholder="Describe the item and where it was lost/found..."></textarea>
+                    <textarea name='description' className="textarea textarea-bordered w-full h-24" placeholder="Describe the item and where it was lost/found..."></textarea>
                 </div>
 
                 {/* Category */}
                 <div>
                     <label className="block font-semibold mb-1">Category</label>
-                    <select defaultValue="" className="select select-bordered w-full">
+                    <select name='category' defaultValue="" className="select select-bordered w-full">
                         <option disabled value="">Select Category</option>
                         <option>Electronics</option>
                         <option>Personal Items</option>
@@ -48,33 +76,41 @@ const AddItems = () => {
                 </div>
 
                 {/* Date */}
-                <div>
-                    <label className="block font-semibold mb-1">Date</label>
-                    <input type="date" className="input input-bordered w-full" />
-                </div>
+                 <div>
+      <label className="block font-semibold mb-1">Date</label>
+      <DatePicker
+  selected={date}
+  name='date'
+  onChange={(newDate) => setDate(newDate)}
+  dateFormat="dd/MM/yyyy"
+  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400"
+  maxDate={new Date()}
+  placeholderText="Select date"
+/>
+    </div>
 
                 {/* Location */}
                 <div>
                     <label className="block font-semibold mb-1">Location</label>
-                    <input type="text" className="input input-bordered w-full" placeholder="e.g. Dhanmondi Lake Park" />
+                    <input type="text" name='location' className="input input-bordered w-full" placeholder="e.g. Dhanmondi Lake Park" />
                 </div>
 
                 {/* Image URL */}
                 <div>
                     <label className="block font-semibold mb-1">Image URL</label>
-                    <input type="url" className="input input-bordered w-full" placeholder="Paste image link..." />
+                    <input type="url" name='imageUrl' className="input input-bordered w-full" placeholder="Paste image link..." />
                 </div>
 
                 {/* Contact Name */}
                 <div>
                     <label className="block font-semibold mb-1">Contact Name</label>
-                    <input type="text" className="input input-bordered w-full" placeholder="Your name..." />
+                    <input type="text" name='name' className="input input-bordered w-full" placeholder="Your name..." />
                 </div>
 
                 {/* Contact Email */}
                 <div>
                     <label className="block font-semibold mb-1">Contact Email</label>
-                    <input type="email" className="input input-bordered w-full" placeholder="you@example.com" />
+                    <input type="email" name='email' className="input input-bordered w-full" placeholder="you@example.com" />
                 </div>
 
                 {/* Submit Button */}
@@ -86,6 +122,7 @@ const AddItems = () => {
                 </div>
             </div>
         </div>
+    </form>
     );
 };
 

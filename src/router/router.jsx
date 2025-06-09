@@ -9,6 +9,8 @@ import MyItems from "../pages/Shared/MyItems";
 import ItemsDetails from "../components/ItemsDetails";
 import RecoveredItems from "../pages/Shared/RecoveredItems";
 import ErrorPage from "../components/ErrorPage";
+import Register from "../components/Register";
+import SignIn from "../components/SignIn";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +45,14 @@ const router = createBrowserRouter([
       {
         path:"*",
         Component:ErrorPage,
+      },
+      {
+        path:'/register',
+        Component:Register
+      },
+      {
+        path:'/signIn',
+        Component:SignIn
       }
     ],
   },
