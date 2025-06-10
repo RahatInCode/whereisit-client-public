@@ -4,14 +4,19 @@ import Lottie from "lottie-react";
 import animationData from '../assets/Animation - 1749125602040.json'
 
 const LostFoundItems = () => {
+  const [selectedCategory, setSelectedCategory] = useState('All Categories');
+ 
+
+
+
     const [items, setItems] = useState([]);
 const [searchQuery, setSearchQuery] = useState('');
-// const [selectedCategory, setSelectedCategory] = useState('All Categories');
+
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch('http://localhost:3000/items');
+                const response = await fetch('https://whereisit-server-side-eta.vercel.app/items');
                 const data = await response.json();
                 setItems(data);
             } catch (error) {
@@ -20,6 +25,12 @@ const [searchQuery, setSearchQuery] = useState('');
         }
         fetchData();
     }, []);
+
+     const filteredItems = items.filter((item) => {
+    const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === 'All Categories' || item.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+    });
 
     return (
         <div className='bg-emerald-50 min-h-screen'>
@@ -48,21 +59,26 @@ const [searchQuery, setSearchQuery] = useState('');
   </svg>
   <input type="search" required placeholder="Search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
 </label>
-             <select defaultValue="Pick a category" className="select select-secondary">
+             <select 
+  value={selectedCategory}
+  onChange={(e) => setSelectedCategory(e.target.value)}
+  className="select select-secondary"
+>
   <option>All Categories</option>
   <option>Electronics</option>
   <option>Personal Items</option>
   <option>Pets</option>
   <option>Keys</option>
   <option>Bags</option>
-  
 </select>
+
            </div>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 ml-30 mr-30'>
                 
                 {
-                    items.map(item => <ItemsCard key={item._id} items={item}></ItemsCard>)
+                   filteredItems.map(item => <ItemsCard key={item._id} items={item} />)
                 }
+
             </div>
         </div>
     );

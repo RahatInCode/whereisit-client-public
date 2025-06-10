@@ -1,54 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { AuthContext   } from './AuthContext'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../src/Firebase/Firebase.config'; 
+import { AuthContext } from './AuthContext';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from '../../src/Firebase/Firebase.config';
 
-const AuthProvider = ({children}) => {
-    const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState(null);
-    const createUser = (email, password) => {
-        setLoading(true);
-        return createUserWithEmailAndPassword(auth, email, password);
-    }
+const AuthProvider = ({ children }) => {
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
-    const signInUser = (email, password) => {
-        setLoading(true);
-         return signInWithEmailAndPassword(auth, email, password);
-    };
+  const createUser = (email, password) => {
+    setLoading(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
 
-    const logout = () => {
-        setLoading(true);
-        return auth.signOut();
-    }
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(currentUser => {
-            if (currentUser) {
-                setUser(currentUser);
-                console.log('User is signed in:', currentUser);
-            } else {
-                setUser(null);
-                console.log('No user is signed in');
-            }
-            setLoading(false);
-        });
+  const signInUser = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
-        return () => unsubscribe();
-    }, []);
+  const logout = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, currentUser => {
+      setUser(currentUser);
+      setLoading(false);
+      console.log('auth state changed:', currentUser);
+    });
 
-const AuthInfo = {
-loading,
-user,
-createUser,
-signInUser,
-logout
-}
+    return () => unsubscribe();
+  }, []);
 
-    return (
-       <AuthContext value={AuthInfo}>
-           {children}
-       </AuthContext>
-    );
+  const AuthInfo = {
+    loading,
+    user,
+    createUser,
+    signInUser,
+    logout
+  };
+
+  return (
+    <AuthContext.Provider value={AuthInfo}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;

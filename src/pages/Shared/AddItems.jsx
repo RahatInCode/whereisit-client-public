@@ -2,10 +2,14 @@ import React, { use, useState } from 'react';
 import { Plus } from 'lucide-react'; 
 import DatePicker from 'react-datepicker';
 import { useParams } from 'react-router';
+import { AuthContext } from '../../contexts/AuthContext';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 
 
 const AddItems = () => {
+const { user } = use(AuthContext)
 const {id: itemId} = useParams
 
 
@@ -26,6 +30,41 @@ const {id: itemId} = useParams
         const imageUrl = form.imageUrl.value;
 
         console.log(type,title,description,category,date,location,name,email,imageUrl);
+
+        const addItems = {
+            itemId,
+            item:user.email,
+            type,
+            title,
+            description,
+            category,
+            date,
+            location,
+            name,
+            email,
+            imageUrl
+        }
+
+axios.post('http://localhost:3000/addItems', addItems)
+.then(res => {
+    console.log(res.data);
+    if(res.data.insertedId){
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your Item has been added!",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+}).catch(error => {
+    console.log(error);
+    Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: "Something went wrong!",
+});
+})
         
     }
      const [date, setDate] = useState(new Date());

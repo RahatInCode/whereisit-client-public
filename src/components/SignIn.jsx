@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 import Lottie from 'lottie-react';
 import loginLottie from '../assets/loginLottie.json';
 import { AuthContext } from '../contexts/AuthContext';
@@ -7,29 +8,35 @@ import { auth } from '../Firebase/Firebase.config';
 import toast, { Toaster } from 'react-hot-toast';
 
 const SignIn = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state || '/' ;
   const { signInUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [ setUser] = useState(null);
 
   const handleSignIn = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
+  e.preventDefault();
+  const form = e.target;
+  const email = form.email.value;
+  const password = form.password.value;
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      await signInUser(email, password);
-      toast.success('Logged in successfully! 🎉');
-      form.reset();
-    } catch (err) {
-      console.error('Login error:', err.message);
-      toast.error('Login failed 😓. Check your credentials.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    await signInUser(email, password);
+    toast.success('Logged in successfully! 🎉');
+    form.reset();
+    setTimeout(() => {
+      navigate(from);
+    }, 3000); 
+
+  } catch (err) {
+    console.error('Login error:', err.message);
+    toast.error('Login failed 😓. Check your credentials.');
+  } 
+};
+
 
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (currentUser) => {
@@ -37,7 +44,7 @@ const SignIn = () => {
     });
 
     return () => unSub();
-  }, []);
+  }, [setUser]);
 
   return (
     <div className="hero bg-base-200 min-h-screen">

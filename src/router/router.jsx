@@ -11,6 +11,7 @@ import RecoveredItems from "../pages/Shared/RecoveredItems";
 import ErrorPage from "../components/ErrorPage";
 import Register from "../components/Register";
 import SignIn from "../components/SignIn";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -27,20 +28,26 @@ const router = createBrowserRouter([
       },
       {
         path: "AddItems",
-        Component:AddItems,
+        element:<PrivateRoute>
+          <AddItems></AddItems>
+        </PrivateRoute>
       },
       {
         path: "MyItems",
-        Component:MyItems,
+        element:<PrivateRoute>
+          <MyItems></MyItems>
+        </PrivateRoute>
       },
       {
         path: "RecoveredItems",
-        Component:RecoveredItems,
+        element:<PrivateRoute>
+          <RecoveredItems></RecoveredItems>
+        </PrivateRoute>
       },
       {
         path:"items/:id",
         Component:ItemsDetails,
-        loader: ({params}) => fetch(`http://localhost:3000/items/${params.id}`)
+        loader: ({params}) => fetch(`https://whereisit-server-side-eta.vercel.app/items/${params.id}`)
       },
       {
         path:"*",
