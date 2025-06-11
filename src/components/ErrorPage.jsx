@@ -13,9 +13,13 @@ const ErrorPage = () => {
     
     <div style={styles.container}>
       <div style={styles.content}>
-        <Lottie loop={true} autoplay={true} animationData={animationData}>
+       <Lottie
+  loop={true}
+  autoplay={true}
+  animationData={animationData}
+  style={{ height: "250px", margin: "0 auto" }}
+/>
 
-           </Lottie>
         <h1 style={styles.title}>404</h1>
         <p style={styles.subtitle}>Oops! You lost your way in WhereIsIt.</p>
         <p style={styles.text}>

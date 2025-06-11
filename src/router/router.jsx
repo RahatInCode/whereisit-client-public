@@ -14,6 +14,10 @@ import SignIn from "../components/SignIn";
 import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
+   {
+        path:"*",
+        Component:ErrorPage,
+      },
   {
     path: "/",
     Component:RootLayout,
@@ -49,10 +53,7 @@ const router = createBrowserRouter([
         Component:ItemsDetails,
         loader: ({params}) => fetch(`https://whereisit-server-side-eta.vercel.app/items/${params.id}`)
       },
-      {
-        path:"*",
-        Component:ErrorPage,
-      },
+     
       {
         path:'/register',
         Component:Register

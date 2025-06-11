@@ -49,7 +49,9 @@ const Navbar = () => {
         Add Items
       </NavLink>
     </li>
-    <li>
+   {
+    user && <>
+     <li>
       <NavLink
         to="/Myitems"
         className={({ isActive }) =>
@@ -61,6 +63,8 @@ const Navbar = () => {
         My Items
       </NavLink>
     </li>
+    </>
+   }
     <li>
       <NavLink
         to="/recovereditems"

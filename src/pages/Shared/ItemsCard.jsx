@@ -24,10 +24,14 @@ const ItemsCard = ({ items }) => {
         />
       </figure>
 
+      
+      
+
       <div className="card-body p-4">
         <h2 className="card-title flex items-center justify-between">
           {title}
           {status?.toLowerCase() === 'new' && (
+            
             <div className="badge badge-secondary ml-2">NEW</div>
           )}
         </h2>

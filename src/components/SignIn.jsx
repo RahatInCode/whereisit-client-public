@@ -6,37 +6,62 @@ import { AuthContext } from '../contexts/AuthContext';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../Firebase/Firebase.config';
 import toast, { Toaster } from 'react-hot-toast';
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const SignIn = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const from = location.state || '/' ;
-  const { signInUser } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
-  const [ setUser] = useState(null);
+  const googleProvider = new GoogleAuthProvider();
 
-  const handleSignIn = async (e) => {
-  e.preventDefault();
-  const form = e.target;
-  const email = form.email.value;
-  const password = form.password.value;
-
-  setLoading(true);
-
-  try {
-    await signInUser(email, password);
-    toast.success('Logged in successfully! 🎉');
-    form.reset();
-    setTimeout(() => {
-      navigate(from);
-    }, 3000); 
-
-  } catch (err) {
-    console.error('Login error:', err.message);
-    toast.error('Login failed 😓. Check your credentials.');
-  } 
+const signInWithGoogle = () => {
+  return signInWithPopup(auth, googleProvider);
 };
 
+const handleGoogleSignIn = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  try {
+    await signInWithGoogle();
+    toast.success('Logged in with Google! 🎉');
+    navigate(from, { replace: true });
+  } catch (err) {
+    console.error('Google sign-in error:', err.message);
+    toast.error('Google sign-in failed 😓');
+  } finally {
+    setLoading(false);
+  }
+};
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.pathname || '/';
+  const { signInUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const [, setUser] = useState(null); // fixed destructuring syntax
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    if (!email || !password) {
+      toast.error("Please fill in both fields.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const result = await signInUser(email, password);
+      console.log("User logged in:", result.user);
+      toast.success('Logged in successfully! 🎉');
+      form.reset();
+      navigate(from, { replace: true });
+    } catch (err) {
+      console.error('Login error:', err.message);
+      toast.error('Login failed 😓 Check your credentials.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (currentUser) => {
@@ -44,7 +69,7 @@ const SignIn = () => {
     });
 
     return () => unSub();
-  }, [setUser]);
+  }, []);
 
   return (
     <div className="hero bg-base-200 min-h-screen">
@@ -58,21 +83,53 @@ const SignIn = () => {
           <div className="card-body">
             <form onSubmit={handleSignIn}>
               <fieldset className="fieldset">
-                <h1 className="text-5xl font-bold mb-4">Log in now!</h1>
+                <h1 className="text-4xl font-bold mb-4">Log in Now</h1>
 
                 <label className="label">Email</label>
-                <input name="email" type="email" className="input input-bordered w-full" placeholder="Email" required />
+                <input
+                  name="email"
+                  type="email"
+                  className="input input-bordered w-full"
+                  placeholder="Enter your email"
+                  required
+                />
 
                 <label className="label mt-2">Password</label>
-                <input name="password" type="password" className="input input-bordered w-full" placeholder="Password" required />
+                <input
+                  name="password"
+                  type="password"
+                  className="input input-bordered w-full"
+                  placeholder="Enter your password"
+                  required
+                />
+
+                <div className="divider">OR</div>
+<button
+  onClick={handleGoogleSignIn}
+  className="btn btn-outline btn-accent w-full"
+>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="google" className="w-5 h-5 mr-2" />
+  Sign in with Google
+</button>
+
 
                 <div className="mt-2">
                   <a className="link link-hover text-sm">Forgot password?</a>
                 </div>
 
-                <button type="submit" className={`btn btn-neutral mt-4 w-full ${loading ? 'btn-disabled opacity-70' : ''}`}>
+                <button
+                  type="submit"
+                  className={`btn btn-neutral mt-4 w-full ${loading ? 'btn-disabled opacity-70' : ''}`}
+                >
                   {loading ? 'Signing In...' : 'Sign In'}
                 </button>
+
+                <p className="text-sm text-center mt-3">
+                  Don’t have an account?{' '}
+                  <a href="/register" className="link text-blue-600">
+                    Register here
+                  </a>
+                </p>
               </fieldset>
             </form>
           </div>

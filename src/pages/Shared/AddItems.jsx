@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 
 const AddItems = () => {
 const { user } = use(AuthContext)
-const {id: itemId} = useParams
+const {id: itemId} = useParams();
 
 
 
@@ -19,52 +19,55 @@ const {id: itemId} = useParams
     const handleFormData = (e) =>{
         e.preventDefault();
         const form = e.target;
-        const type = form.type.value;
-        const title = form.title.value;
-        const description = form.description.value;
-        const category = form.category.value;
-        const date = form.date.value;
-        const location = form.location.value;
-        const name = form.name.value;
-        const email = form.email.value;
-        const imageUrl = form.imageUrl.value;
+        const type = form.type.value.trim();
+        const title = form.title.value.trim();
+        const description = form.description.value.trim();
+        const category = form.category.value.trim();
+        const location = form.location.value.trim();
+        const name = form.name.value.trim();
+        const email = form.email.value.trim();
+        const imageUrl = form.imageUrl.value.trim();
 
-        console.log(type,title,description,category,date,location,name,email,imageUrl);
+        if (!type || !title || !description || !category || !location || !name || !email || !imageUrl) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Please fill in all required fields!",
+    });
+    return;
+  }
 
         const addItems = {
             itemId,
-            item:user.email,
+            item: user.email,
             type,
             title,
             description,
             category,
-            date,
+            date: date.toLocaleDateString(),
             location,
             name,
             email,
             imageUrl
         }
 
-axios.post('http://localhost:3000/addItems', addItems)
-.then(res => {
-    console.log(res.data);
-    if(res.data.insertedId){
+ axios.post("http://localhost:3000/addItems", addItems)
+    .then(res => {
+      if (res.data.insertedId) {
         Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Your Item has been added!",
-            showConfirmButton: false,
-            timer: 1500
+          position: "top-end",
+          icon: "success",
+          title: "Your Item has been added!",
+          showConfirmButton: false,
+          timer: 1500,
         });
-    }
-}).catch(error => {
-    console.log(error);
-    Swal.fire({
-  icon: "error",
-  title: "Oops...",
-  text: "Something went wrong!",
-});
-})
+        form.reset();
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
         
     }
      const [date, setDate] = useState(new Date());
@@ -85,6 +88,7 @@ axios.post('http://localhost:3000/addItems', addItems)
                         <option disabled value="">Select Type</option>
                         <option>Lost</option>
                         <option>Found</option>
+                        
                     </select>
                 </div>
 
@@ -141,16 +145,21 @@ axios.post('http://localhost:3000/addItems', addItems)
                 </div>
 
                 {/* Contact Name */}
-                <div>
-                    <label className="block font-semibold mb-1">Contact Name</label>
-                    <input type="text" name='name' className="input input-bordered w-full" placeholder="Your name..." />
-                </div>
+                <input
+  type="text"
+  name="name"
+  className="input input-bordered w-full"
+  defaultValue={user.displayName}
+  disabled
+/>
+<input
+  type="email"
+  name="email"
+  className="input input-bordered w-full"
+  defaultValue={user.email}
+  disabled
+/>
 
-                {/* Contact Email */}
-                <div>
-                    <label className="block font-semibold mb-1">Contact Email</label>
-                    <input type="email" name='email' className="input input-bordered w-full" placeholder="you@example.com" />
-                </div>
 
                 {/* Submit Button */}
                 <div className="flex justify-center ">
