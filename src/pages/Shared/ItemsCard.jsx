@@ -1,18 +1,21 @@
 import React from 'react';
 
 const ItemsCard = ({ items }) => {
-  const {
-    _id,
-    title,
-    description,
-    category,
-    imageURL,
-    status,
-    location: {
-      type: locationType,
-      coordinates: [longitude, latitude]
-    }
-  } = items;
+ const {
+  _id,
+  title,
+  description,
+  category,
+  imageURL,
+  status,
+  location: {
+    type: locationType = "unknown",
+   
+  } = {}
+} = items;
+
+
+
 
   return (
     <div className="card bg-base-100 w-full max-w-sm shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
@@ -50,10 +53,10 @@ const ItemsCard = ({ items }) => {
           )}
         </div>
 
-        {/* Bonus: Location coordinates */}
+        {/* Bonus: Location coordinates
         <div className="mt-3 text-xs text-gray-400">
           📍 Lat: {latitude.toFixed(3)}, Long: {longitude.toFixed(3)}
-        </div>
+        </div> */}
         <div className="mt-3 text-xs text-gray-400">
           <a href={`/items/${_id}`} className="text-blue-500 hover:underline">
             View Details

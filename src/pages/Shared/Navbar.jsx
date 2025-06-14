@@ -1,9 +1,10 @@
-import { use } from "react";
+import { use, useState } from "react";
 import { NavLink } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Navbar = () => {
   const { user, logout } = use(AuthContext);
+  const [hovered, setHovered] = useState(false);
 
   const handleLogout = () => {
     logout()
@@ -142,47 +143,94 @@ const Navbar = () => {
 </label>
 
       <div className="navbar-end space-x-2">
-        {user ? (
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar hover:ring-2 hover:ring-primary transition-all"
-            >
-              <div className="w-10 rounded-full ring-2 ring-offset-2 ring-primary ring-offset-base-100">
-                <img src={user.photoURL} alt="User" />
-              </div>
+      {user ? (
+        <div className="dropdown dropdown-end">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle avatar relative hover:ring-2 hover:ring-primary transition-all"
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          >
+            <div className="w-10 rounded-full ring-2 ring-offset-2 ring-primary ring-offset-base-100">
+              <img src={user.photoURL} alt="User" />
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-3 shadow bg-base-100 rounded-box w-56"
-            >
-              <li>
-                <span className="font-semibold text-sm">{user.displayName}</span>
-              </li>
-              <li>
-                <button onClick={handleLogout} className="text-red-500 hover:underline">
-                  Logout
-                </button>
-              </li>
-            </ul>
+
+            {/* Show name on hover */}
+            {hovered && (
+              <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-sm font-semibold bg-base-100 shadow px-2 py-1 rounded">
+                {user.displayName}
+              </span>
+            )}
           </div>
-        ) : (
-          <>
-            <NavLink
-              to="/SignIn"
-              className="btn btn-sm border-yellow-400 text-yellow-600 hover:bg-yellow-100"
-            >
-              Login
-            </NavLink>
-            <NavLink
-              to="/Register"
-              className="btn btn-sm border-yellow-400 text-yellow-600 hover:bg-yellow-100"
-            >
-              Register
-            </NavLink>
-          </>
-        )}
+
+          {/* Dropdown */}
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-3 shadow bg-base-100 rounded-box w-56"
+          >
+            <li>
+              <span className="font-semibold text-sm">{user.displayName}</span>
+            </li>
+            <li>
+              <NavLink
+                to="/AddItems"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-orange-500 font-semibold underline underline-offset-4"
+                    : "text-gray-700 hover:text-orange-500 transition"
+                }
+              >
+                Add Items
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/Myitems"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-orange-500 font-semibold underline underline-offset-4"
+                    : "text-gray-700 hover:text-orange-500 transition"
+                }
+              >
+                My Items
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/recovereditems"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-orange-500 font-semibold underline underline-offset-4"
+                    : "text-gray-700 hover:text-orange-500 transition"
+                }
+              >
+                Recovered
+              </NavLink>
+            </li>
+            <li>
+              <button onClick={handleLogout} className="text-red-500 hover:underline">
+                Logout
+              </button>
+            </li>
+          </ul>
+        </div>
+      ) : (
+        <>
+          <NavLink
+            to="/SignIn"
+            className="btn btn-sm border-yellow-400 text-yellow-600 hover:bg-yellow-100"
+          >
+            Login
+          </NavLink>
+          <NavLink
+            to="/Register"
+            className="btn btn-sm border-yellow-400 text-yellow-600 hover:bg-yellow-100"
+          >
+            Register
+          </NavLink>
+        </>
+      )}
       </div>
     </div>
   );

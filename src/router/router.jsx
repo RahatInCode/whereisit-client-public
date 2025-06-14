@@ -51,7 +51,7 @@ const router = createBrowserRouter([
       {
         path:"items/:id",
         Component:ItemsDetails,
-        loader: ({params}) => fetch(`https://whereisit-server-side-eta.vercel.app/items/${params.id}`)
+        loader: ({params}) => fetch(`https://whereisit-server-side-eta.vercel.app/additems/${params.id}`)
       },
      
       {
