@@ -15,7 +15,7 @@ const MyItems = () => {
 
   useEffect(() => {
     if (user?.email) {
-      axios.get(`http://localhost:3000/myItems?email=${user.email}`)
+      axios.get(`https://whereisit-server-side-eta.vercel.app/myItems?email=${user.email}`)
         .then(res => {
           setMyItems(res.data);
           setLoading(false);
@@ -38,7 +38,7 @@ const MyItems = () => {
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:3000/items/${id}`)
+        axios.delete(`https://whereisit-server-side-eta.vercel.app/items/${id}`)
           .then(res => {
             if (res.data.deletedCount > 0) {
               setMyItems(myItems.filter(item => item._id !== id));
@@ -60,7 +60,7 @@ const MyItems = () => {
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
 
-    axios.put(`http://localhost:3000/addItems/${editingItem._id}`, {
+    axios.put(`https://whereisit-server-side-eta.vercel.app/addItems/${editingItem._id}`, {
       title: editingItem.title,
       category: editingItem.category,
       date: editingItem.date,

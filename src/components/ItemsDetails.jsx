@@ -12,7 +12,7 @@ const ItemsDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/addItems/${id}`)
+    axios.get(`https://whereisit-server-side-eta.vercel.app/addItems/${id}`)
       .then(res => {
         setItem(res.data);
         setLoading(false);
@@ -43,7 +43,7 @@ const handleSubmit = (event) => {
     claimedAt: new Date().toISOString(),
   };
 
-  axios.post("http://localhost:3000/claimedItems", formData)
+  axios.post("https://whereisit-server-side-eta.vercel.app/claimedItems", formData)
     .then(() => {
       alert("Claim submitted successfully!");
       setIsModalOpen(false);

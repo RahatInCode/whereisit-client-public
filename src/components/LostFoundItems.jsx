@@ -18,7 +18,7 @@ const LostFoundItems = () => {
     const fetchItems = async () => {
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:3000/addItems'); 
+            const response = await fetch('https://whereisit-server-side-eta.vercel.app/addItems'); 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

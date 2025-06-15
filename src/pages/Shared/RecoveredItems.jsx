@@ -11,7 +11,7 @@ const RecoveredItems = () => {
   useEffect(() => {
     const fetchClaimedItems = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/claimedItems");
+        const res = await axios.get("https://whereisit-server-side-eta.vercel.app/claimedItems");
         setRecoveredItems(res.data);
         setLoading(false);
       } catch (err) {

@@ -16,7 +16,7 @@ const Home = () => {
 useEffect(() => {
     const fetchRecentItems = async () => {
         try {
-            const res = await fetch('http://localhost:3000/addItems');
+            const res = await fetch('https://whereisit-server-side-eta.vercel.app/addItems');
             const data = await res.json();
             const sorted = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
             const topSix = sorted.slice(0, 6);

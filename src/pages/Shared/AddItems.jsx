@@ -52,7 +52,7 @@ const AddItems = () => {
         }
 
         // Use the backend endpoint for adding items
-        axios.post("http://localhost:3000/addItems", addItems)
+        axios.post("https://whereisit-server-side-eta.vercel.app/addItems", addItems)
             .then(res => {
                 if (res.data.insertedId) {
                     Swal.fire({
