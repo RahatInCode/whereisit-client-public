@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import ItemsCard from '../pages/Shared/ItemsCard';
 import Lottie from "lottie-react";
 import animationData from '../assets/Animation - 1749125602040.json';
+import ItemsCard from '../pages/Shared/ItemsCard';
+
 
 const LostFoundItems = () => {
     const [selectedCategory, setSelectedCategory] = useState('All Categories');
@@ -136,7 +137,7 @@ const LostFoundItems = () => {
                 ) : (
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6'>
                         {filteredItems.map(item => (
-                            <ItemsCard key={item._id} items={item} />
+                            <ItemsCard key={item._id} items={item}  />
                         ))}
                     </div>
                 )}
