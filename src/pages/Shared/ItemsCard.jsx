@@ -53,10 +53,23 @@ const ItemsCard = ({ items }) => {
           )}
         </div>
 
-        {/* Bonus: Location coordinates
-        <div className="mt-3 text-xs text-gray-400">
-          📍 Lat: {latitude.toFixed(3)}, Long: {longitude.toFixed(3)}
-        </div> */}
+        <p className="flex items-center gap-2 text-red-500">
+  📍 {items?.location?.name || "Location not specified"}
+</p>
+
+<div>
+  <span
+    className={`inline-block px-4 py-1 text-xs font-semibold rounded-full ${
+      items?.status === 'Lost'
+        ? 'bg-red-100 text-red-600'
+        : 'bg-green-100 text-green-600'
+    }`}
+  >
+    {items?.status || "Unknown"}
+  </span>
+</div>
+
+
         <div className="mt-3 text-xs text-gray-400">
           <a href={`/items/${_id}`} className="text-blue-500 hover:underline">
             View Details
