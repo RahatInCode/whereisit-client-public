@@ -1,12 +1,97 @@
-# React + Vite
+# 🌐 WhereIsIt – Lost & Found Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack web application designed to connect people who have **lost** personal belongings with those who may have **found** them. Users can post, search, manage, and recover lost or found items through an intuitive and responsive interface.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Live Links
 
-## Expanding the ESLint configuration
+- 🔗 **Client Live Site**: [whereisit-43e1b.web.app](https://whereisit-43e1b.web.app/)
+- 🛠️ **Server Live API**: [whereisit-server-side-eta.vercel.app](https://whereisit-server-side-eta.vercel.app/)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 📌 Project Purpose
+
+To build a secure, responsive, and user-friendly platform that handles:
+- User authentication (email/password + Google)
+- Posting and browsing lost/found items
+- Claiming and recovering items
+- Managing personal item listings
+- Fully functional admin-style dashboard for users
+
+---
+
+## ⚙️ Key Features
+
+- 🔐 **Authentication** (Firebase + JWT):
+  - Email/password & Google sign-in
+  - JWT-secured private routes
+
+- 📝 **CRUD Operations**:
+  - Add, update, delete lost/found items
+  - View and recover items
+
+- 🧠 **Smart UI/UX**:
+  - Framer Motion animations
+  - Responsive design for mobile, tablet & desktop
+  - Modal interactions for recovery process
+  - Conditional routing based on login status
+
+- 🔎 **Search Functionality**:
+  - Filter items by title or location
+
+- 📁 **Item Management**:
+  - Users can manage and edit their own posts
+  - View recovered items in card/table toggle layout
+
+- 🔄 **Dynamic Routing**:
+  - Titles change per page
+  - Error handling with custom 404 page
+  - Reloading on protected routes preserved
+
+- 🌈 **Extras**:
+  - SweetAlert/Toast feedback on all actions
+  - Loading spinner while data fetches
+  - Environment variable protection for Firebase & MongoDB
+
+---
+
+## 🧰 Tech Stack
+
+### Client:
+- React.js (Vite)
+- Tailwind CSS
+- React Router DOM
+- Firebase Auth
+- Axios
+- Framer Motion
+- React Datepicker
+- react-hot-toast / sweetalert2
+
+### Server:
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- JWT (jsonwebtoken)
+- dotenv
+- CORS
+
+---
+
+## 🧾 NPM Packages Used
+
+```bash
+"axios"
+"react-router-dom"
+"firebase"
+"framer-motion"
+"react-datepicker"
+"react-hot-toast"
+"sweetalert2"
+"jsonwebtoken"
+"cors"
+"dotenv"
+"mongoose"
+"express"
+
