@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import axios from 'axios';
 
+
 const ItemsDetails = () => {
+
   const { id } = useParams();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     axios.get(`http://localhost:3000/addItems/${id}`)
@@ -23,6 +26,32 @@ const ItemsDetails = () => {
 
   if (loading) return <p className="text-center py-10">Loading...</p>;
   if (error) return <p className="text-center text-red-500 py-10">{error}</p>;
+
+
+const handleSubmit = (event) => {
+  event.preventDefault();
+  
+  const formData = {
+    itemId: item?.id,
+    fullName: event.target.fullName.value,
+    phone: event.target.phone.value,
+    email: event.target.email.value || null,
+    description: event.target.description.value,
+    lostDate: event.target.lostDate.value,
+    lostLocation: event.target.lostLocation.value,
+    proofImage: event.target.proofImage.files[0] ? event.target.proofImage.files[0].name : null,
+    claimedAt: new Date().toISOString(),
+  };
+
+  axios.post("http://localhost:3000/claimedItems", formData)
+    .then(() => {
+      alert("Claim submitted successfully!");
+      setIsModalOpen(false);
+    })
+    .catch(() => {
+      alert("Error submitting claim.");
+    });
+};
 
   return (
     <div className="max-w-xl mx-auto mt-10 bg-white rounded-2xl shadow-md p-6 space-y-6">
@@ -83,16 +112,50 @@ const ItemsDetails = () => {
         </div>
       </div>
 
+
+
+
+
+      
+
       {/* BUTTON */}
       <button
+       onClick={() => setIsModalOpen(true)}
   className={`w-full py-2 rounded text-white font-semibold transition-all ${
     item?.status === 'Lost' ? 'bg-green-600 hover:bg-green-700' : 'bg-indigo-600 hover:bg-indigo-700'
   }`}
 >
   {item?.status === 'Lost' ? 'I found this' : 'This is mine'}
 </button>
+ {/* CLAIM MODAL */}
+      {isModalOpen && (
+        <dialog open className="modal">
+          <div className="modal-box max-w-lg">
+            <h3 className="font-bold text-lg mb-4">Claim This Item</h3>
+            <form onSubmit={handleSubmit}>
+  <input type="text" name="fullName" placeholder="Full Name" className="input input-bordered w-full mb-3" required />
+  <input type="tel" name="phone" placeholder="Phone Number" className="input input-bordered w-full mb-3" required />
+  <input type="email" name="email" placeholder="Email (optional)" className="input input-bordered w-full mb-3" />
+  <textarea name="description" placeholder="Describe the item to prove ownership" className="textarea textarea-bordered w-full mb-3" required />
+  <input type="date" name="lostDate" className="input input-bordered w-full mb-3" required />
+  <input type="text" name="lostLocation" placeholder="Where did you lose it?" className="input input-bordered w-full mb-3" required />
+  <input type="file" name="proofImage" accept="image/*" className="file-input file-input-bordered w-full mb-3" />
+  <button type="submit" className="btn btn-primary w-full">Submit Claim</button>
+</form>
+
+
+            {/* Close Modal */}
+            <div className="modal-action">
+              <button onClick={() => setIsModalOpen(false)} className="btn">Close</button>
+            </div>
+          </div>
+        </dialog>
+      )}
     </div>
+
+    
   );
+  
 };
 
 export default ItemsDetails;
