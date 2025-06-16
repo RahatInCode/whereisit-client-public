@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { Plus } from 'lucide-react'; 
 import DatePicker from 'react-datepicker';
 import { useParams } from 'react-router';
@@ -6,7 +6,13 @@ import { AuthContext } from '../../contexts/AuthContext';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
+
 const AddItems = () => {
+const [isAdding, setIsAdding] = useState(false);
+  useEffect(() => {
+  document.title = isAdding ? "Adding Item... | WhereIsIt" : "Add Item | WhereIsIt";
+}, [isAdding]);
+
     const { user } = use(AuthContext)
     const {id: itemId} = useParams();
     const [date, setDate] = useState(new Date());
@@ -89,7 +95,7 @@ const AddItems = () => {
                     {/* Type */}
                     <div>
                         <label className="block font-semibold mb-1">Type</label>
-                        <select name='type' defaultValue="" className="select select-bordered w-full">
+                        <select name='type' defaultValue="" onChange={() => setIsAdding(true)} className="select select-bordered w-full">
                             <option disabled value="">Select Type</option>
                             <option>Lost</option>
                             <option>Found</option>
@@ -99,19 +105,19 @@ const AddItems = () => {
                     {/* Title */}
                     <div>
                         <label className="block font-semibold mb-1">Title</label>
-                        <input name='title' type="text" className="input input-bordered w-full" placeholder="e.g. Lost Wallet at Park" />
+                        <input name='title'  onChange={() => setIsAdding(true)} type="text" className="input input-bordered w-full" placeholder="e.g. Lost Wallet at Park" />
                     </div>
 
                     {/* Description */}
                     <div>
                         <label className="block font-semibold mb-1">Description</label>
-                        <textarea name='description' className="textarea textarea-bordered w-full h-24" placeholder="Describe the item and where it was lost/found..."></textarea>
+                        <textarea   onChange={() => setIsAdding(true)} name='description' className="textarea textarea-bordered w-full h-24" placeholder="Describe the item and where it was lost/found..."></textarea>
                     </div>
 
                     {/* Category */}
                     <div>
                         <label className="block font-semibold mb-1">Category</label>
-                        <select name='category' defaultValue="" className="select select-bordered w-full">
+                        <select  onChange={() => setIsAdding(true)} name='category' defaultValue="" className="select select-bordered w-full">
                             <option disabled value="">Select Category</option>
                             <option>Electronics</option>
                             <option>Personal Items</option>
@@ -139,13 +145,13 @@ const AddItems = () => {
                     {/* Location */}
                     <div>
                         <label className="block font-semibold mb-1">Location</label>
-                        <input type="text" name='location' className="input input-bordered w-full" placeholder="e.g. Dhanmondi Lake Park" />
+                        <input  onChange={() => setIsAdding(true)} type="text" name='location' className="input input-bordered w-full" placeholder="e.g. Dhanmondi Lake Park" />
                     </div>
 
                     {/* Image URL */}
                     <div>
                         <label className="block font-semibold mb-1">Image URL</label>
-                        <input type="url" name='imageUrl' className="input input-bordered w-full" placeholder="Paste image link..." />
+                        <input  onChange={() => setIsAdding(true)} type="url" name='imageUrl' className="input input-bordered w-full" placeholder="Paste image link..." />
                     </div>
 
                     {/* Contact Name */}
@@ -153,6 +159,7 @@ const AddItems = () => {
                         <label className="block font-semibold mb-1">Name</label>
                         <input
                             type="text"
+                             onChange={() => setIsAdding(true)}
                             name="name"
                             className="input input-bordered w-full"
                             defaultValue={user.displayName}

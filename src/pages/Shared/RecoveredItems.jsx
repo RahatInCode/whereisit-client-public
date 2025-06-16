@@ -7,7 +7,10 @@ const RecoveredItems = () => {
   const [recoveredItems, setRecoveredItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+ 
+  useEffect(() => {
+  document.title = "Recovered | WhereIsIt";
+}, []);
   useEffect(() => {
     const fetchClaimedItems = async () => {
       try {

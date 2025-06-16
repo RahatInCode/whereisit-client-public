@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import axios from 'axios';
+import { AuthContext } from '../contexts/AuthContext';
+
 
 
 const ItemsDetails = () => {
-
+ const { user } = use(AuthContext)
   const { id } = useParams();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -133,7 +135,29 @@ const handleSubmit = (event) => {
           <div className="modal-box max-w-lg">
             <h3 className="font-bold text-lg mb-4">Claim This Item</h3>
             <form onSubmit={handleSubmit}>
-  <input type="text" name="fullName" placeholder="Full Name" className="input input-bordered w-full mb-3" required />
+
+              <div>
+                        <label className="block font-semibold mb-1">Name</label>
+                        <input
+                            type="text"
+                            name="name"
+                            className="input input-bordered w-full"
+                            defaultValue={user.displayName}
+                            disabled
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block font-semibold mb-1">Email</label>
+                        <input
+                            type="email"
+                            name="email"
+                            className="input input-bordered w-full"
+                            defaultValue={user.email}
+                            disabled
+                        />
+                    </div>
+  <input type="text" name="fullName" defaultValue={user.displayName} placeholder="Full Name" className="input input-bordered w-full mb-3" required />
   <input type="tel" name="phone" placeholder="Phone Number" className="input input-bordered w-full mb-3" required />
   <input type="email" name="email" placeholder="Email (optional)" className="input input-bordered w-full mb-3" />
   <textarea name="description" placeholder="Describe the item to prove ownership" className="textarea textarea-bordered w-full mb-3" required />

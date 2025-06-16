@@ -12,6 +12,11 @@ const LostFoundItems = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+  document.title = "All items | WhereIsIt";
+}, []);
+
+
+    useEffect(() => {
         fetchItems();
     }, []);
 

@@ -13,6 +13,11 @@ import { NavLink } from 'react-router';
 const Home = () => {
     const [recentItems, setRecentItems] = useState([]);
 
+    useEffect(() => {
+  document.title = "Home | WhereIsIt";
+}, []);
+
+
 useEffect(() => {
     const fetchRecentItems = async () => {
         try {

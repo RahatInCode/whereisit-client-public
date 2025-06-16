@@ -14,6 +14,12 @@ const MyItems = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+  document.title = "My Items | WhereIsIt";
+}, []);
+
+
+  useEffect(() => {
+   
     if (user?.email) {
       axios.get(`https://whereisit-server-side-eta.vercel.app/myItems?email=${user.email}`)
         .then(res => {
@@ -171,6 +177,27 @@ const MyItems = () => {
                 </div>
               )}
               <form onSubmit={handleUpdateSubmit} className="space-y-3">
+                <div>
+                        
+                        <input
+                            type="text"
+                            name="name"
+                            className="input input-bordered w-full"
+                            defaultValue={user.displayName}
+                            disabled
+                        />
+                    </div>
+
+                    <div>
+                       
+                        <input
+                            type="email"
+                            name="email"
+                            className="input input-bordered w-full"
+                            defaultValue={user.email}
+                            disabled
+                        />
+                    </div>
                 <input
                   type="text"
                   value={editingItem.title}
