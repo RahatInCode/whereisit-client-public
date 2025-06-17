@@ -1,39 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { FiGrid, FiList, FiCheckCircle } from "react-icons/fi"; 
+import { FiGrid, FiList, FiCheckCircle } from "react-icons/fi";
+import { AuthContext } from "../../contexts/AuthContext";
+import { getIdToken } from "firebase/auth";
+
 
 const RecoveredItems = () => {
+  const { user } = useContext(AuthContext);
   const [layoutView, setLayoutView] = useState(localStorage.getItem("layoutView") || "grid");
   const [recoveredItems, setRecoveredItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
- 
+
   useEffect(() => {
-  document.title = "Recovered | WhereIsIt";
-}, []);
+    document.title = "Recovered items | WhereIsIt";
+  }, []);
+
   useEffect(() => {
+    if (!user?.email) return;
+
     const fetchClaimedItems = async () => {
       try {
-        const res = await axios.get("https://whereisit-server-side-eta.vercel.app/claimedItems");
+        const res = await axios.get(`https://whereisit-server-side-eta.vercel.app/claimedItems?email=${user.email}`);
         setRecoveredItems(res.data);
-        setLoading(false);
       } catch (err) {
         console.error("Error fetching claimed items:", err);
         setError("Failed to load recovered items.");
+      } finally {
         setLoading(false);
       }
     };
 
     fetchClaimedItems();
-  }, []);
+  }, [user]);
 
-  // Persist layout choice
   const handleLayoutChange = (view) => {
     setLayoutView(view);
     localStorage.setItem("layoutView", view);
   };
 
-  if (loading) return <p className="text-center py-10">Loading...</p>;
+  if (loading) return <span className="loading loading-spinner text-secondary text-center py-10"></span>;
   if (error) return <p className="text-center text-red-500 py-10">{error}</p>;
 
   return (
@@ -43,7 +49,7 @@ const RecoveredItems = () => {
       </h1>
       <p className="text-gray-600 mb-6">Items that have been successfully recovered</p>
 
-      {/* Layout View Toggle Buttons */}
+      {/* Layout Toggle */}
       <div className="flex space-x-2 mb-6">
         <button
           onClick={() => handleLayoutChange("grid")}
@@ -59,16 +65,16 @@ const RecoveredItems = () => {
         </button>
       </div>
 
-      {/* No Items Message */}
+      {/* No Items */}
       {recoveredItems.length === 0 ? (
         <p className="text-center text-gray-500">No recovered items yet.</p>
       ) : layoutView === "table" ? (
-        /* Improved Table View */
+        // 🧾 TABLE VIEW
         <div className="overflow-x-auto bg-white rounded-lg shadow">
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-blue-100 text-blue-800 font-semibold">
-                <th className="p-4 text-left border-b">Original Item</th>
+                <th className="p-4 text-left border-b">Title</th>
                 <th className="p-4 text-left border-b">Recovered By</th>
                 <th className="p-4 text-left border-b">Recovery Date</th>
                 <th className="p-4 text-left border-b">Recovery Location</th>
@@ -76,30 +82,34 @@ const RecoveredItems = () => {
               </tr>
             </thead>
             <tbody>
-              {recoveredItems.map(item => (
+              {recoveredItems.map((item) => (
                 <tr key={item._id} className="hover:bg-gray-100 transition-all">
-                  <td className="p-4 border-b">{item.originalItem}</td>
-                  <td className="p-4 border-b">{item.fullName}</td>
-                  <td className="p-4 border-b">{new Date(item.lostDate).toLocaleDateString()}</td>
-                  <td className="p-4 border-b">{item.lostLocation}</td>
-                  <td className="p-4 border-b">{item.fullName}</td>
+                  <td className="p-4 border-b">{item.originalItemData?.title || "Untitled"}</td>
+                  <td className="p-4 border-b">{item.recoveredBy?.name || "Unknown"}</td>
+                  <td className="p-4 border-b">
+                    {item.claimInfo?.claimedAt
+                      ? new Date(item.claimInfo.claimedAt).toLocaleDateString()
+                      : "Not Available"}
+                  </td>
+                  <td className="p-4 border-b">{item.claimInfo?.lostLocation || "Unknown"}</td>
+                  <td className="p-4 border-b">{item.claimInfo?.fullName || "Unknown"}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       ) : (
-        /* Grid View */
+        // 🗂️ GRID VIEW
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {recoveredItems.map(item => (
-            <div key={item._id} className="p-4 bg-white shadow rounded-lg">
+          {recoveredItems.map((item) => (
+            <div key={item._id} className="p-4 bg-white shadow rounded-lg space-y-2">
               <h2 className="text-lg font-semibold flex items-center">
-                <FiCheckCircle className="text-green-500 mr-2" /> {item.originalItem}
+                <FiCheckCircle className="text-green-500 mr-2" /> {item.originalItemData?.title || "Untitled"}
               </h2>
-              <p><strong>Recovered By:</strong> {item.fullName}</p>
-              <p><strong>Date:</strong> {new Date(item.lostDate).toLocaleDateString()}</p>
-              <p><strong>Location:</strong> {item.lostLocation}</p>
-              <p><strong>Owner:</strong> {item.fullName}</p>
+              <p><strong>Recovered By:</strong> {item.recoveredBy?.name || "Unknown"}</p>
+              <p><strong>Date:</strong> {item.claimInfo?.claimedAt ? new Date(item.claimInfo.claimedAt).toLocaleDateString() : "N/A"}</p>
+              <p><strong>Location:</strong> {item.claimInfo?.lostLocation || "Unknown"}</p>
+              <p><strong>Owner:</strong> {item.claimInfo?.fullName || "Unknown"}</p>
             </div>
           ))}
         </div>

@@ -49,10 +49,15 @@ const router = createBrowserRouter([
         </PrivateRoute>
       },
       {
-        path:"items/:id",
-        Component:ItemsDetails,
-        loader: ({params}) => fetch(`https://whereisit-server-side-eta.vercel.app/additems/${params.id}`)
-      },
+  path: "items/:id",
+  element: (
+    <PrivateRoute>
+      <ItemsDetails />
+    </PrivateRoute>
+  ),
+  loader: ({ params }) => fetch(`https://whereisit-server-side-eta.vercel.app/additems/${params.id}`)
+},
+
      
       {
         path:'/register',

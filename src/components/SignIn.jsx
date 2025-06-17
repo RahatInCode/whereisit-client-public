@@ -34,7 +34,16 @@ const handleGoogleSignIn = async (e) => {
   const from = location.state?.pathname || '/';
   const { signInUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-  const [, setUser] = useState(null); // fixed destructuring syntax
+  const [, setUser] = useState(null); 
+ useEffect(() => {
+  const redirectPath = localStorage.getItem("redirectAfterLogin");
+  if (redirectPath) {
+    navigate(redirectPath);
+    localStorage.removeItem("redirectAfterLogin");
+  }
+}, [navigate]);
+
+
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -51,6 +60,7 @@ const handleGoogleSignIn = async (e) => {
 
     try {
       const result = await signInUser(email, password);
+      
       console.log("User logged in:", result.user);
       toast.success('Logged in successfully! 🎉');
       form.reset();
@@ -108,7 +118,7 @@ const handleGoogleSignIn = async (e) => {
   onClick={handleGoogleSignIn}
   className="btn btn-outline btn-accent w-full"
 >
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="google" className="w-5 h-5 mr-2" />
+  <img src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw" alt="google" className="w-5 h-5 mr-2" />
   Sign in with Google
 </button>
 

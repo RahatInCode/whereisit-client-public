@@ -98,7 +98,7 @@ const MyItems = () => {
       <h2 className="text-2xl font-bold mb-4">My Posted Items</h2>
 
       {loading ? (
-        <span className="loading loading-spinner text-secondary"></span>
+        <span className="loading loading-spinner text-secondary text-center py-10"></span>
       ) : myItems.length === 0 ? (
         <p className="italic text-gray-600">You haven't posted anything yet!</p>
       ) : (

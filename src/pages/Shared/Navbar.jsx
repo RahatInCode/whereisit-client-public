@@ -1,10 +1,22 @@
-import { use, useState } from "react";
+import { use, useState, useEffect } from "react";
 import { NavLink } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Navbar = () => {
   const { user, logout } = use(AuthContext);
   const [hovered, setHovered] = useState(false);
+
+const [theme, setTheme] = useState("light");
+
+useEffect(() => {
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("theme", theme);
+}, [theme]);
+
+useEffect(() => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme) setTheme(savedTheme);
+}, []);
 
   const handleLogout = () => {
     logout()
@@ -121,7 +133,12 @@ const Navbar = () => {
       {/* Theme Toggle */}
  <label className="swap swap-rotate">
   {/* this hidden checkbox controls the state */}
-  <input type="checkbox" className="theme-controller" value="synthwave" />
+  <input
+  type="checkbox"
+  onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
+  checked={theme === "dark"}
+/>
+
 
   {/* sun icon */}
   <svg

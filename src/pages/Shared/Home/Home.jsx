@@ -23,16 +23,17 @@ useEffect(() => {
         try {
             const res = await fetch('https://whereisit-server-side-eta.vercel.app/addItems');
             const data = await res.json();
-            const sorted = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-            const topSix = sorted.slice(0, 6);
-            setRecentItems(topSix);
+              console.log('Recent Items:', data);  
+            setRecentItems(data);
+
         } catch (err) {
             console.error("Failed to fetch recent items", err);
         }
     };
-
     fetchRecentItems();
 }, []);
+
+
 
     return (
         <div className='bg-emerald-50 min-h-screen'>
@@ -48,16 +49,23 @@ useEffect(() => {
 
                 <div className="max-w-6xl mx-auto px-4 py-8">
     <h2 className="text-3xl font-semibold mb-6 text-center">Recently Added Items</h2>
-    {recentItems.length === 0 ? (
-        <p className="text-center text-gray-500">No recent items found.</p>
-    ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recentItems.map(item => (
-    <ItemsCard key={item._id} items={item} />
+  {recentItems.length === 0 ? (
+    <div className="text-center text-gray-500">
+        <p>No recent items found.</p>
+        <p className="mt-2">Be the first to add a lost or found item!</p>
+        <button className="btn btn-primary mt-4">
+            <NavLink to="/addItems">Add an Item</NavLink>
+        </button>
+    </div>
+) : (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {recentItems.map(item => (
+  <ItemsCard key={item._id} items={item} />
 ))}
 
-        </div>
-    )}
+    </div>
+)}
+
 
     <div className='mt-6'>
         <button className='btn btn-accent'>

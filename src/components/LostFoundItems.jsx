@@ -10,6 +10,7 @@ const LostFoundItems = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+     const theme = localStorage.getItem("theme") || "light";
 
     useEffect(() => {
   document.title = "All items | WhereIsIt";
@@ -23,7 +24,7 @@ const LostFoundItems = () => {
     const fetchItems = async () => {
         try {
             setLoading(true);
-            const response = await fetch('https://whereisit-server-side-eta.vercel.app/addItems'); 
+            const response = await fetch('https://whereisit-server-side-eta.vercel.app/allItems'); 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -73,7 +74,7 @@ const LostFoundItems = () => {
     }
 
     return (
-        <div className='bg-emerald-50 min-h-screen'>
+        <div className={`bg-emerald-50 min-h-screen ${theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
             <div className="pt-8 pb-4">
                 <h1 className="text-3xl font-bold text-center">Lost and Found Items</h1>
             </div>

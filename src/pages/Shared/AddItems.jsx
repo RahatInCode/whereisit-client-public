@@ -57,7 +57,7 @@ const [isAdding, setIsAdding] = useState(false);
             imageURL: imageUrl 
         }
 
-        // Use the backend endpoint for adding items
+        //  backend endpoint for adding items
         axios.post("https://whereisit-server-side-eta.vercel.app/addItems", addItems)
             .then(res => {
                 if (res.data.insertedId) {
@@ -69,7 +69,8 @@ const [isAdding, setIsAdding] = useState(false);
                         timer: 1500,
                     });
                     form.reset();
-                    setDate(new Date()); // Reset date picker
+                    setIsAdding(false);
+                    setDate(new Date()); 
                 }
             })
             .catch(error => {
@@ -84,7 +85,7 @@ const [isAdding, setIsAdding] = useState(false);
 
     return (
         <form onSubmit={handleFormData}>
-            <div className="bg-emerald-50 min-h-screen flex items-center justify-center p-6">
+            <div className={`bg-emerald-50 min-h-screen flex items-center justify-center p-6`}>
                 <div className="w-full max-w-2xl bg-white shadow-md rounded-xl p-8 space-y-6">
 
                     <div>
