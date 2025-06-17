@@ -22,8 +22,7 @@ useEffect(() => {
     const fetchRecentItems = async () => {
         try {
             const res = await fetch('https://whereisit-server-side-eta.vercel.app/addItems');
-            const data = await res.json();
-              console.log('Recent Items:', data);  
+            const data = await res.json(); 
             setRecentItems(data);
 
         } catch (err) {

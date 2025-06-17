@@ -60,7 +60,6 @@ const handleGoogleSignIn = async (e) => {
 
     try {
       const result = await signInUser(email, password);
-      
       console.log("User logged in:", result.user);
       toast.success('Logged in successfully! 🎉');
       form.reset();
