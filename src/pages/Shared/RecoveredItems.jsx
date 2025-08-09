@@ -4,9 +4,10 @@ import { FiGrid, FiList, FiCheckCircle } from "react-icons/fi";
 import { AuthContext } from "../../contexts/AuthContext";
 
 
-
 const RecoveredItems = () => {
   const { user } = useContext(AuthContext);
+
+
   const [layoutView, setLayoutView] = useState(localStorage.getItem("layoutView") || "grid");
   const [recoveredItems, setRecoveredItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -39,27 +40,44 @@ const RecoveredItems = () => {
     localStorage.setItem("layoutView", view);
   };
 
-  if (loading) return <span className="loading loading-spinner text-secondary text-center py-10"></span>;
-  if (error) return <p className="text-center text-red-500 py-10">{error}</p>;
+  if (loading)
+    return (
+      <span className="loading loading-spinner text-secondary text-center py-10"></span>
+    );
+
+  if (error)
+    return (
+      <p className="text-center text-red-500 py-10">{error}</p>
+    );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4 flex items-center">
+    <div className="max-w-7xl mx-auto px-4 py-8 bg-white dark:bg-gray-900 dark:text-gray-200 rounded-lg transition-colors duration-300">
+      <h1 className="text-3xl font-bold mb-4 flex items-center text-gray-900 dark:text-white transition-colors duration-300">
         <FiCheckCircle className="text-green-500 mr-2" /> All Recovered Items
       </h1>
-      <p className="text-gray-600 mb-6">Items that have been successfully recovered</p>
+      <p className="text-gray-600 dark:text-gray-400 mb-6 transition-colors duration-300">
+        Items that have been successfully recovered
+      </p>
 
       {/* Layout Toggle */}
       <div className="flex space-x-2 mb-6">
         <button
           onClick={() => handleLayoutChange("grid")}
-          className={`btn flex items-center ${layoutView === "grid" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
+          className={`btn flex items-center transition-colors duration-300 ${
+            layoutView === "grid"
+              ? "bg-blue-600 text-white hover:bg-blue-700"
+              : "bg-gray-300 dark:bg-gray-700 dark:text-gray-300 hover:bg-gray-400 dark:hover:bg-gray-600"
+          }`}
         >
           <FiGrid className="mr-2" /> Grid View
         </button>
         <button
           onClick={() => handleLayoutChange("table")}
-          className={`btn flex items-center ${layoutView === "table" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
+          className={`btn flex items-center transition-colors duration-300 ${
+            layoutView === "table"
+              ? "bg-blue-600 text-white hover:bg-blue-700"
+              : "bg-gray-300 dark:bg-gray-700 dark:text-gray-300 hover:bg-gray-400 dark:hover:bg-gray-600"
+          }`}
         >
           <FiList className="mr-2" /> Table View
         </button>
@@ -67,32 +85,37 @@ const RecoveredItems = () => {
 
       {/* No Items */}
       {recoveredItems.length === 0 ? (
-        <p className="text-center text-gray-500">No recovered items yet.</p>
+        <p className="text-center text-gray-500 dark:text-gray-400 transition-colors duration-300">
+          No recovered items yet.
+        </p>
       ) : layoutView === "table" ? (
         // 🧾 TABLE VIEW
-        <div className="overflow-x-auto bg-white rounded-lg shadow">
-          <table className="w-full border-collapse">
+        <div className="overflow-x-auto rounded-lg shadow bg-white dark:bg-gray-800 transition-colors duration-300">
+          <table className="w-full border-collapse text-gray-900 dark:text-gray-200 transition-colors duration-300">
             <thead>
-              <tr className="bg-blue-100 text-blue-800 font-semibold">
-                <th className="p-4 text-left border-b">Title</th>
-                <th className="p-4 text-left border-b">Recovered By</th>
-                <th className="p-4 text-left border-b">Recovery Date</th>
-                <th className="p-4 text-left border-b">Recovery Location</th>
-                <th className="p-4 text-left border-b">Original Owner</th>
+              <tr className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 font-semibold transition-colors duration-300">
+                <th className="p-4 text-left border-b border-gray-300 dark:border-gray-700">Title</th>
+                <th className="p-4 text-left border-b border-gray-300 dark:border-gray-700">Recovered By</th>
+                <th className="p-4 text-left border-b border-gray-300 dark:border-gray-700">Recovery Date</th>
+                <th className="p-4 text-left border-b border-gray-300 dark:border-gray-700">Recovery Location</th>
+                <th className="p-4 text-left border-b border-gray-300 dark:border-gray-700">Original Owner</th>
               </tr>
             </thead>
             <tbody>
               {recoveredItems.map((item) => (
-                <tr key={item._id} className="hover:bg-gray-100 transition-all">
-                  <td className="p-4 border-b">{item.originalItemData?.title || "Untitled"}</td>
-                  <td className="p-4 border-b">{item.recoveredBy?.name || "Unknown"}</td>
-                  <td className="p-4 border-b">
+                <tr
+                  key={item._id}
+                  className="hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
+                >
+                  <td className="p-4 border-b border-gray-300 dark:border-gray-700">{item.originalItemData?.title || "Untitled"}</td>
+                  <td className="p-4 border-b border-gray-300 dark:border-gray-700">{item.recoveredBy?.name || "Unknown"}</td>
+                  <td className="p-4 border-b border-gray-300 dark:border-gray-700">
                     {item.claimInfo?.claimedAt
                       ? new Date(item.claimInfo.claimedAt).toLocaleDateString()
                       : "Not Available"}
                   </td>
-                  <td className="p-4 border-b">{item.claimInfo?.lostLocation || "Unknown"}</td>
-                  <td className="p-4 border-b">{item.claimInfo?.fullName || "Unknown"}</td>
+                  <td className="p-4 border-b border-gray-300 dark:border-gray-700">{item.claimInfo?.lostLocation || "Unknown"}</td>
+                  <td className="p-4 border-b border-gray-300 dark:border-gray-700">{item.claimInfo?.fullName || "Unknown"}</td>
                 </tr>
               ))}
             </tbody>
@@ -102,14 +125,25 @@ const RecoveredItems = () => {
         // 🗂️ GRID VIEW
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {recoveredItems.map((item) => (
-            <div key={item._id} className="p-4 bg-white shadow rounded-lg space-y-2">
-              <h2 className="text-lg font-semibold flex items-center">
+            <div
+              key={item._id}
+              className="p-4 bg-white dark:bg-gray-800 shadow rounded-lg space-y-2 transition-colors duration-300"
+            >
+              <h2 className="text-lg font-semibold flex items-center text-gray-900 dark:text-gray-100 transition-colors duration-300">
                 <FiCheckCircle className="text-green-500 mr-2" /> {item.originalItemData?.title || "Untitled"}
               </h2>
-              <p><strong>Recovered By:</strong> {item.recoveredBy?.name || "Unknown"}</p>
-              <p><strong>Date:</strong> {item.claimInfo?.claimedAt ? new Date(item.claimInfo.claimedAt).toLocaleDateString() : "N/A"}</p>
-              <p><strong>Location:</strong> {item.claimInfo?.lostLocation || "Unknown"}</p>
-              <p><strong>Owner:</strong> {item.claimInfo?.fullName || "Unknown"}</p>
+              <p className="text-gray-700 dark:text-gray-300 transition-colors duration-300">
+                <strong>Recovered By:</strong> {item.recoveredBy?.name || "Unknown"}
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 transition-colors duration-300">
+                <strong>Date:</strong> {item.claimInfo?.claimedAt ? new Date(item.claimInfo.claimedAt).toLocaleDateString() : "N/A"}
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 transition-colors duration-300">
+                <strong>Location:</strong> {item.claimInfo?.lostLocation || "Unknown"}
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 transition-colors duration-300">
+                <strong>Owner:</strong> {item.claimInfo?.fullName || "Unknown"}
+              </p>
             </div>
           ))}
         </div>

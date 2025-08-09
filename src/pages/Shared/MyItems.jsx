@@ -105,7 +105,7 @@ const MyItems = () => {
         <div className="overflow-x-auto">
           <table className="table w-full">
             <thead>
-              <tr className="bg-gray-200">
+              <tr className="bg-gray-400 text-white">
                 <th>Image</th>
                 <th>Title</th>
                 <th>Category</th>
@@ -158,9 +158,9 @@ const MyItems = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
-              className="bg-white p-6 rounded-lg max-w-lg w-full space-y-4 shadow-xl"
+              className="bg-base-800 p-6 rounded-lg max-w-lg w-full space-y-4 shadow-xl"
             >
-              <h3 className="text-xl font-semibold mb-2">Update Item</h3>
+              <h3 className="text-xl font-semibold mb-2 text-black">Update Item</h3>
               {getImageUrl(editingItem) ? (
                 <img 
                   src={getImageUrl(editingItem)} 
