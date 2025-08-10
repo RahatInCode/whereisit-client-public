@@ -14,7 +14,7 @@ const ItemsCard = ({ items }) => {
   } = items;
 
   return (
-    <div className="card bg-base-100 w-full max-w-sm shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+    <div className="card font-bold bg-base-100 w-full max-w-sm shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
       <figure className="h-56 overflow-hidden">
         <img
           src={imageURL}
