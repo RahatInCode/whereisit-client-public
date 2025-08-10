@@ -5,7 +5,7 @@ import groupImg2 from '../../../assets/images/team-working-together-project.jpg'
 
 const FramerMotion = () => {
   return (
-    <div className="hero bg-base-200 min-h-screen px-4 py-5">
+    <div className="hero bg-emerald-50 min-h-screen px-4 py-5">
       <div className="hero-content flex flex-col lg:flex-row gap-10 items-center justify-center">
         
         {/* First Motion Image */}

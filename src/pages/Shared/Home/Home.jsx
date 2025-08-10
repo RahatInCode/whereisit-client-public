@@ -6,6 +6,7 @@ import FramerMotion from './FramerMotion';
 import  { useState, useEffect } from 'react';
 import ItemsCard from '../ItemsCard';
 import { NavLink } from 'react-router';
+import SuccessStories from './SuccessStories';
 
 
 
@@ -85,6 +86,7 @@ useEffect(() => {
            </div>
            <Stats></Stats>
            <HowItWorks></HowItWorks>
+           <SuccessStories></SuccessStories>
         </div>
     );
 };
