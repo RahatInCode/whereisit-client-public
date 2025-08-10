@@ -28,7 +28,7 @@ const slides = [
 
 const Banner = () => {
   return (
-    <div className="relative w-full">
+    <div className="relative w-full" aria-label="Homepage banner slider">
       <Swiper
         spaceBetween={0}
         centeredSlides={true}
@@ -38,18 +38,22 @@ const Banner = () => {
         }}
         pagination={{
           clickable: true,
+          bulletClass: 'swiper-pagination-bullet !bg-white',
         }}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
         className="mySwiper"
+        role="region"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
             <div
               className="h-[80vh] w-full bg-cover bg-center relative flex items-center justify-center"
               style={{ backgroundImage: `url(${slide.img})` }}
+              role="img"
+              aria-label={`${slide.title} slide`}
             >
-              <div className="bg-black bg-opacity-50 p-6 rounded-lg text-white text-center max-w-xl">
+              <div className="bg-black bg-opacity-60 p-6 rounded-lg text-white text-center max-w-xl mx-4 md:mx-0">
                 <h2 className="text-3xl md:text-5xl font-bold mb-4">{slide.title}</h2>
                 <p className="text-md md:text-lg">{slide.desc}</p>
               </div>

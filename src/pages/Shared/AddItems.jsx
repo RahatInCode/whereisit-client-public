@@ -84,112 +84,179 @@ const [isAdding, setIsAdding] = useState(false);
     }
 
     return (
-        <form onSubmit={handleFormData}>
-            <div className={`bg-emerald-50 min-h-screen flex items-center justify-center p-6`}>
-                <div className="w-full max-w-2xl bg-white shadow-md rounded-xl p-8 space-y-6">
+       // inside return JSX
 
-                    <div>
-                        <h1 className="font-extrabold text-3xl text-gray-800">Add Lost or Found Items</h1>
-                        <p className="text-gray-600">Help others by posting details about lost or found items.</p>
-                    </div>
+<form onSubmit={handleFormData}>
+  <div className="bg-base-100 dark:bg-base-200 min-h-screen flex items-center justify-center p-6">
+    <div className="w-full max-w-2xl bg-base-100 dark:bg-base-300 shadow-md rounded-xl p-8 space-y-6">
+      
+      <div>
+        <h1 className="font-extrabold text-3xl text-base-content dark:text-base-content">
+          Add Lost or Found Items
+        </h1>
+        <p className="text-base-content/70 dark:text-base-content/80">
+          Help others by posting details about lost or found items.
+        </p>
+      </div>
 
-                    {/* Type */}
-                    <div>
-                        <label className="block font-semibold mb-1">Type</label>
-                        <select name='type' defaultValue="" onChange={() => setIsAdding(true)} className="select select-bordered w-full">
-                            <option disabled value="">Select Type</option>
-                            <option>Lost</option>
-                            <option>Found</option>
-                        </select>
-                    </div>
+      {/* Type */}
+      <div>
+        <label className="block font-semibold mb-1 text-base-content dark:text-base-content">
+          Type
+        </label>
+        <select
+          name="type"
+          defaultValue=""
+          onChange={() => setIsAdding(true)}
+          className="select select-bordered w-full bg-base-100 dark:bg-base-200 text-base-content dark:text-base-content"
+        >
+          <option disabled value="">
+            Select Type
+          </option>
+          <option>Lost</option>
+          <option>Found</option>
+        </select>
+      </div>
 
-                    {/* Title */}
-                    <div>
-                        <label className="block font-semibold mb-1">Title</label>
-                        <input name='title'  onChange={() => setIsAdding(true)} type="text" className="input input-bordered w-full" placeholder="e.g. Lost Wallet at Park" />
-                    </div>
+      {/* Title */}
+      <div>
+        <label className="block font-semibold mb-1 text-base-content dark:text-base-content">
+          Title
+        </label>
+        <input
+          name="title"
+          onChange={() => setIsAdding(true)}
+          type="text"
+          className="input input-bordered w-full bg-base-100 dark:bg-base-200 text-base-content dark:text-base-content"
+          placeholder="e.g. Lost Wallet at Park"
+        />
+      </div>
 
-                    {/* Description */}
-                    <div>
-                        <label className="block font-semibold mb-1">Description</label>
-                        <textarea   onChange={() => setIsAdding(true)} name='description' className="textarea textarea-bordered w-full h-24" placeholder="Describe the item and where it was lost/found..."></textarea>
-                    </div>
+      {/* Description */}
+      <div>
+        <label className="block font-semibold mb-1 text-base-content dark:text-base-content">
+          Description
+        </label>
+        <textarea
+          onChange={() => setIsAdding(true)}
+          name="description"
+          className="textarea textarea-bordered w-full h-24 bg-base-100 dark:bg-base-200 text-base-content dark:text-base-content"
+          placeholder="Describe the item and where it was lost/found..."
+        />
+      </div>
 
-                    {/* Category */}
-                    <div>
-                        <label className="block font-semibold mb-1">Category</label>
-                        <select  onChange={() => setIsAdding(true)} name='category' defaultValue="" className="select select-bordered w-full">
-                            <option disabled value="">Select Category</option>
-                            <option>Electronics</option>
-                            <option>Personal Items</option>
-                            <option>Pets</option>
-                            <option>Keys</option>
-                            <option>Bags</option>
-                            <option>Others</option>
-                        </select>
-                    </div>
+      {/* Category */}
+      <div>
+        <label className="block font-semibold mb-1 text-base-content dark:text-base-content">
+          Category
+        </label>
+        <select
+          onChange={() => setIsAdding(true)}
+          name="category"
+          defaultValue=""
+          className="select select-bordered w-full bg-base-100 dark:bg-base-200 text-base-content dark:text-base-content"
+        >
+          <option disabled value="">
+            Select Category
+          </option>
+          <option>Electronics</option>
+          <option>Personal Items</option>
+          <option>Pets</option>
+          <option>Keys</option>
+          <option>Bags</option>
+          <option>Others</option>
+        </select>
+      </div>
 
-                    {/* Date */}
-                    <div>
-                        <label className="block font-semibold mb-1">Date</label>
-                        <DatePicker
-                            selected={date}
-                            name='date'
-                            onChange={(newDate) => setDate(newDate)}
-                            dateFormat="dd/MM/yyyy"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400"
-                            maxDate={new Date()}
-                            placeholderText="Select date"
-                        />
-                    </div>
+      {/* Date */}
+      <div>
+        <label className="block font-semibold mb-1 text-base-content dark:text-base-content">
+          Date
+        </label>
+        <DatePicker
+          selected={date}
+          name="date"
+          onChange={(newDate) => setDate(newDate)}
+          dateFormat="dd/MM/yyyy"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400 bg-base-100 dark:bg-base-200 text-base-content dark:text-base-content"
+          maxDate={new Date()}
+          placeholderText="Select date"
+          // For dark mode on react-datepicker, consider custom CSS (I'll add below)
+        />
+      </div>
 
-                    {/* Location */}
-                    <div>
-                        <label className="block font-semibold mb-1">Location</label>
-                        <input  onChange={() => setIsAdding(true)} type="text" name='location' className="input input-bordered w-full" placeholder="e.g. Dhanmondi Lake Park" />
-                    </div>
+      {/* Location */}
+      <div>
+        <label className="block font-semibold mb-1 text-base-content dark:text-base-content">
+          Location
+        </label>
+        <input
+          onChange={() => setIsAdding(true)}
+          type="text"
+          name="location"
+          className="input input-bordered w-full bg-base-100 dark:bg-base-200 text-base-content dark:text-base-content"
+          placeholder="e.g. Dhanmondi Lake Park"
+        />
+      </div>
 
-                    {/* Image URL */}
-                    <div>
-                        <label className="block font-semibold mb-1">Image URL</label>
-                        <input  onChange={() => setIsAdding(true)} type="url" name='imageUrl' className="input input-bordered w-full" placeholder="Paste image link..." />
-                    </div>
+      {/* Image URL */}
+      <div>
+        <label className="block font-semibold mb-1 text-base-content dark:text-base-content">
+          Image URL
+        </label>
+        <input
+          onChange={() => setIsAdding(true)}
+          type="url"
+          name="imageUrl"
+          className="input input-bordered w-full bg-base-100 dark:bg-base-200 text-base-content dark:text-base-content"
+          placeholder="Paste image link..."
+        />
+      </div>
 
-                    {/* Contact Name */}
-                    <div>
-                        <label className="block font-semibold mb-1">Name</label>
-                        <input
-                            type="text"
-                             onChange={() => setIsAdding(true)}
-                            name="name"
-                            className="input input-bordered w-full"
-                            defaultValue={user.displayName}
-                            disabled
-                        />
-                    </div>
+      {/* Contact Name */}
+      <div>
+        <label className="block font-semibold mb-1 text-base-content dark:text-base-content">
+          Name
+        </label>
+        <input
+          type="text"
+          onChange={() => setIsAdding(true)}
+          name="name"
+          className="input input-bordered w-full bg-base-100 dark:bg-base-200 text-base-content dark:text-base-content"
+          defaultValue={user.displayName}
+          disabled
+        />
+      </div>
 
-                    <div>
-                        <label className="block font-semibold mb-1">Email</label>
-                        <input
-                            type="email"
-                            name="email"
-                            className="input input-bordered w-full"
-                            defaultValue={user.email}
-                            disabled
-                        />
-                    </div>
+      {/* Email */}
+      <div>
+        <label className="block font-semibold mb-1 text-base-content dark:text-base-content">
+          Email
+        </label>
+        <input
+          type="email"
+          name="email"
+          className="input input-bordered w-full bg-base-100 dark:bg-base-200 text-base-content dark:text-base-content"
+          defaultValue={user.email}
+          disabled
+        />
+      </div>
 
-                    {/* Submit Button */}
-                    <div className="flex justify-center ">
-                        <button type="submit" className="btn btn-success flex items-center gap-2">
-                            <Plus size={18} />
-                            Add Post
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
+      {/* Submit Button */}
+      <div className="flex justify-center">
+        <button type="submit" className="btn btn-success flex items-center gap-2">
+          <Plus size={18} />
+          Add Post
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
     );
 };
 
-export default AddItems;
+export default AddItems; 
+
+
+

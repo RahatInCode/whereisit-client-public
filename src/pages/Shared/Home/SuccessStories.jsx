@@ -55,59 +55,47 @@ const SuccessStories = () => {
   return (
     <section
       ref={containerRef}
-      className="bg-emerald-50 dark:bg-gray-900 py-10 overflow-hidden transition-colors duration-300"
+      className="bg-emerald-50 py-10 overflow-hidden"
+      aria-label="Success stories slider"
     >
-      <h2 className="text-3xl font-bold text-center text-black dark:text-white mb-8">
-        Success Stories ❤️
+      <h2 className="text-3xl font-bold text-center text-black mb-8">
+         Success Stories ❤️
       </h2>
 
       <div className="slider-container relative w-full overflow-hidden">
         <div className="slider-track flex gap-8 px-8">
           {successStories.map((story, index) => (
             <div
-              key={index}
-              className="story-card min-w-[300px] max-w-xs 
-              bg-white dark:bg-gray-800 
-              rounded-2xl shadow-lg p-6 
-              flex flex-col items-center text-center 
-              transform hover:scale-105 transition-transform duration-300"
+              key={`story-${index}`}
+              className="story-card min-w-[300px] max-w-xs bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300"
             >
               <img
                 src={story.image}
                 alt={story.name}
-                className="w-20 h-20 rounded-full object-cover 
-                border-4 border-pink-400 shadow-md mb-4"
+                className="w-20 h-20 rounded-full object-cover border-4 border-pink-400 shadow-md mb-4"
               />
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+              <h3 className="text-lg font-semibold text-gray-800">
                 {story.name}
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 italic mt-2">
-                "{story.message}"
-              </p>
+              <p className="text-gray-600 italic mt-2">"{story.message}"</p>
             </div>
           ))}
 
+          {/* Duplicate for infinite loop */}
           {successStories.map((story, index) => (
             <div
-              key={`dup-${index}`}
-              className="story-card min-w-[300px] max-w-xs 
-              bg-white dark:bg-gray-800 
-              rounded-2xl shadow-lg p-6 
-              flex flex-col items-center text-center 
-              transform hover:scale-105 transition-transform duration-300"
+              key={`story-dup-${index}`}
+              className="story-card min-w-[300px] max-w-xs bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300"
             >
               <img
                 src={story.image}
                 alt={story.name}
-                className="w-20 h-20 rounded-full object-cover 
-                border-4 border-pink-400 shadow-md mb-4"
+                className="w-20 h-20 rounded-full object-cover border-4 border-pink-400 shadow-md mb-4"
               />
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+              <h3 className="text-lg font-semibold text-gray-800">
                 {story.name}
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 italic mt-2">
-                "{story.message}"
-              </p>
+              <p className="text-gray-600 italic mt-2">"{story.message}"</p>
             </div>
           ))}
         </div>
@@ -117,4 +105,5 @@ const SuccessStories = () => {
 };
 
 export default SuccessStories;
+
 

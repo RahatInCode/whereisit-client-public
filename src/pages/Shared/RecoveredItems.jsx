@@ -3,10 +3,8 @@ import axios from "axios";
 import { FiGrid, FiList, FiCheckCircle } from "react-icons/fi";
 import { AuthContext } from "../../contexts/AuthContext";
 
-
 const RecoveredItems = () => {
   const { user } = useContext(AuthContext);
-
 
   const [layoutView, setLayoutView] = useState(localStorage.getItem("layoutView") || "grid");
   const [recoveredItems, setRecoveredItems] = useState([]);
@@ -24,6 +22,7 @@ const RecoveredItems = () => {
       try {
         const res = await axios.get(`https://whereisit-server-side-eta.vercel.app/claimedItems?email=${user.email}`);
         setRecoveredItems(res.data);
+        setError("");
       } catch (err) {
         console.error("Error fetching claimed items:", err);
         setError("Failed to load recovered items.");
@@ -42,20 +41,24 @@ const RecoveredItems = () => {
 
   if (loading)
     return (
-      <span className="loading loading-spinner text-secondary text-center py-10"></span>
+      <div className="flex justify-center py-10 bg-base-100 dark:bg-base-200 transition-colors duration-300">
+        <span className="loading loading-spinner text-secondary"></span>
+      </div>
     );
 
   if (error)
     return (
-      <p className="text-center text-red-500 py-10">{error}</p>
+      <p className="text-center text-red-500 py-10 bg-base-100 dark:bg-base-200 transition-colors duration-300">
+        {error}
+      </p>
     );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 bg-white dark:bg-gray-900 dark:text-gray-200 rounded-lg transition-colors duration-300">
-      <h1 className="text-3xl font-bold mb-4 flex items-center text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="max-w-7xl mx-auto px-4 py-8 bg-base-100 dark:bg-base-200 rounded-lg transition-colors duration-300">
+      <h1 className="text-3xl font-bold mb-4 flex items-center text-base-content transition-colors duration-300">
         <FiCheckCircle className="text-green-500 mr-2" /> All Recovered Items
       </h1>
-      <p className="text-gray-600 dark:text-gray-400 mb-6 transition-colors duration-300">
+      <p className="text-base-content/70 mb-6 transition-colors duration-300">
         Items that have been successfully recovered
       </p>
 
@@ -85,13 +88,13 @@ const RecoveredItems = () => {
 
       {/* No Items */}
       {recoveredItems.length === 0 ? (
-        <p className="text-center text-gray-500 dark:text-gray-400 transition-colors duration-300">
+        <p className="text-center text-base-content/70 transition-colors duration-300">
           No recovered items yet.
         </p>
       ) : layoutView === "table" ? (
         // 🧾 TABLE VIEW
-        <div className="overflow-x-auto rounded-lg shadow bg-white dark:bg-gray-800 transition-colors duration-300">
-          <table className="w-full border-collapse text-gray-900 dark:text-gray-200 transition-colors duration-300">
+        <div className="overflow-x-auto rounded-lg shadow bg-base-100 dark:bg-base-300 transition-colors duration-300">
+          <table className="w-full border-collapse text-base-content transition-colors duration-300">
             <thead>
               <tr className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 font-semibold transition-colors duration-300">
                 <th className="p-4 text-left border-b border-gray-300 dark:border-gray-700">Title</th>
@@ -127,21 +130,21 @@ const RecoveredItems = () => {
           {recoveredItems.map((item) => (
             <div
               key={item._id}
-              className="p-4 bg-white dark:bg-gray-800 shadow rounded-lg space-y-2 transition-colors duration-300"
+              className="p-4 bg-base-100 dark:bg-base-300 shadow rounded-lg space-y-2 transition-colors duration-300"
             >
-              <h2 className="text-lg font-semibold flex items-center text-gray-900 dark:text-gray-100 transition-colors duration-300">
+              <h2 className="text-lg font-semibold flex items-center text-base-content transition-colors duration-300">
                 <FiCheckCircle className="text-green-500 mr-2" /> {item.originalItemData?.title || "Untitled"}
               </h2>
-              <p className="text-gray-700 dark:text-gray-300 transition-colors duration-300">
+              <p className="text-base-content/80 transition-colors duration-300">
                 <strong>Recovered By:</strong> {item.recoveredBy?.name || "Unknown"}
               </p>
-              <p className="text-gray-700 dark:text-gray-300 transition-colors duration-300">
+              <p className="text-base-content/80 transition-colors duration-300">
                 <strong>Date:</strong> {item.claimInfo?.claimedAt ? new Date(item.claimInfo.claimedAt).toLocaleDateString() : "N/A"}
               </p>
-              <p className="text-gray-700 dark:text-gray-300 transition-colors duration-300">
+              <p className="text-base-content/80 transition-colors duration-300">
                 <strong>Location:</strong> {item.claimInfo?.lostLocation || "Unknown"}
               </p>
-              <p className="text-gray-700 dark:text-gray-300 transition-colors duration-300">
+              <p className="text-base-content/80 transition-colors duration-300">
                 <strong>Owner:</strong> {item.claimInfo?.fullName || "Unknown"}
               </p>
             </div>
@@ -153,4 +156,5 @@ const RecoveredItems = () => {
 };
 
 export default RecoveredItems;
+
 

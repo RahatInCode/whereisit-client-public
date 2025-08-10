@@ -26,16 +26,17 @@ const ItemsDetails = () => {
       });
   }, [id]);
 
-  useEffect(() => {
-    if (!user?.uid) return;
+ useEffect(() => {
+  if (!user?.uid) return;
 
-    axios
-      .get(`https://whereisit-server-side-eta.vercel.app/claimedItems/status/${id}?uid=${user.uid}`)
-      .then((res) => setClaimStatus(res.data))
-      .catch((err) => console.error("Failed to fetch claim status", err));
-  }, [id, user]);
+  axios
+    .get(`https://whereisit-server-side-eta.vercel.app/claimedItems/status/${id}?uid=${user.uid}`)
+    .then((res) => setClaimStatus(res.data))
+    .catch((err) => console.error("Failed to fetch claim status", err));
+}, [id, user]);
 
-  if (loading) return <span className="loading loading-spinner text-secondary"></span>;
+
+  if (loading) return <span className="loading loading-spinner text-secondary"></span>
   if (error) return <p className="text-center text-red-500 py-10">{error}</p>;
 
   const handleSubmit = (event) => {
@@ -70,13 +71,13 @@ const ItemsDetails = () => {
 
     axios.post("https://whereisit-server-side-eta.vercel.app/claimedItems", formData)
       .then(() => {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "You successfully claimed this item!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+         Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "You successfully claimed this item!",
+                                showConfirmButton: false,
+                                timer: 1500,
+                            });
         setIsModalOpen(false);
         setClaimStatus({ claimed: true, by: user.displayName, date: new Date().toISOString() });
       })
@@ -86,47 +87,30 @@ const ItemsDetails = () => {
   };
 
   return (
-    <div
-      className="max-w-xl mx-auto mt-10 rounded-2xl shadow-md p-6 space-y-6"
-      style={{
-        backgroundColor: "var(--bg-color)",
-        color: "var(--text-color)",
-        border: `1px solid var(--card-border)`
-      }}
-    >
+    <div className="max-w-xl mx-auto mt-10 bg-white rounded-2xl shadow-md p-6 space-y-6">
       {item?.imageURL ? (
         <img src={item.imageURL} alt={item.title} className="w-full h-64 object-cover rounded-lg" />
       ) : (
-        <div className="w-full h-64 flex items-center justify-center rounded-lg" style={{ backgroundColor: "var(--card-bg)", color: "var(--secondary-text)" }}>
-          No image available
-        </div>
+        <div className="w-full h-64 bg-gray-100 flex items-center justify-center rounded-lg text-gray-400">No image available</div>
       )}
 
       <div>
         <h1 className="text-2xl md:text-3xl font-bold mb-2 break-words">{item?.title || "Untitled Item"}</h1>
         <div>
-          <span
-            className={`inline-block px-4 py-1 text-xs font-semibold rounded-full ${
-              item?.status === 'Lost' ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'
-            }`}
-          >
+          <span className={`inline-block px-4 py-1 text-xs font-semibold rounded-full ${item?.status === 'Lost' ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}`}>
             {item?.status || "Unknown"}
           </span>
         </div>
-        <p className="mb-4 break-words" style={{ color: "var(--secondary-text)" }}>
-          {item?.description || "No description provided."}
-        </p>
+        <p className="text-gray-600 mb-4 break-words">{item?.description || "No description provided."}</p>
 
         <div className="space-y-2 text-sm">
           <p className="flex items-center gap-2 text-red-500">📍 {item?.location?.name || "Location not specified"}</p>
           <p className="flex items-center gap-2 text-blue-500">📅 {item?.date || "Date not specified"}</p>
           <p className="flex items-center gap-2 text-green-600">🧑 {item?.name || "Anonymous"}</p>
-          <p className="flex items-center gap-2 text-purple-600">
-            ✉️ {item?.email ? <a href={`mailto:${item.email}`} className="underline">{item.email}</a> : "No email provided"}
-          </p>
+          <p className="flex items-center gap-2 text-purple-600">✉️ {item?.email ? <a href={`mailto:${item.email}`} className="underline">{item.email}</a> : "No email provided"}</p>
 
           {claimStatus?.claimed && (
-            <div className="p-4 rounded mt-4" style={{ backgroundColor: "var(--card-bg)", color: "var(--text-color)" }}>
+            <div className="bg-gray-100 p-4 rounded mt-4">
               <h3 className="font-bold text-sm mb-2">Already claimed by:</h3>
               <p>👤 {claimStatus.by} on {new Date(claimStatus.date).toLocaleDateString()}</p>
             </div>
@@ -135,22 +119,23 @@ const ItemsDetails = () => {
       </div>
 
       <button
-        onClick={() => setIsModalOpen(true)}
-        disabled={claimStatus?.claimed}
-        className={`w-full py-2 rounded text-white font-semibold transition-all ${
-          claimStatus?.claimed
-            ? 'bg-gray-400 cursor-not-allowed'
-            : item?.status === 'Lost'
-              ? 'bg-green-600 hover:bg-green-700'
-              : 'bg-indigo-600 hover:bg-indigo-700'
-        }`}
-      >
-        {claimStatus?.claimed ? 'You already claimed this' : 'Claim this item'}
-      </button>
+  onClick={() => setIsModalOpen(true)}
+  disabled={claimStatus?.claimed}
+  className={`w-full py-2 rounded text-white font-semibold transition-all ${
+    claimStatus?.claimed
+      ? 'bg-gray-400 cursor-not-allowed'
+      : item?.status === 'Lost'
+        ? 'bg-green-600 hover:bg-green-700'
+        : 'bg-indigo-600 hover:bg-indigo-700'
+  }`}
+>
+  {claimStatus?.claimed ? 'You already claimed this' : 'Claim this item'}
+</button>
+
 
       {isModalOpen && (
         <dialog open className="modal">
-          <div className="modal-box max-w-lg" style={{ backgroundColor: "var(--bg-color)", color: "var(--text-color)" }}>
+          <div className="modal-box max-w-lg">
             <h3 className="font-bold text-lg mb-4">Claim This Item</h3>
             <form onSubmit={handleSubmit}>
               <div>
@@ -180,5 +165,7 @@ const ItemsDetails = () => {
   );
 };
 
-export default ItemsDetails;
+export default ItemsDetails; 
+
+
 
