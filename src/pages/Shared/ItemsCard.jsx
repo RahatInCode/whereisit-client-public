@@ -27,7 +27,7 @@ const ItemsCard = ({ items }) => {
         <h2 className="card-title flex items-center justify-between">
           {title}
           {status?.toLowerCase() === 'new' && (
-            <div className="badge badge-secondary ml-2">NEWs</div>
+            <div className="badge badge-secondary ml-2">NEW</div>
           )}
         </h2>
 
