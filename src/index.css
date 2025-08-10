@@ -1,2 +1,16 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --card-bg: #ffffff;
+  --card-text: #333333;
+}
+
+.dark {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --card-bg: #1e1e1e;
+  --card-text: #cccccc;
+}
