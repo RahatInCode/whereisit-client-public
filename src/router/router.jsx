@@ -12,6 +12,7 @@ import ErrorPage from "../components/ErrorPage";
 import Register from "../components/Register";
 import SignIn from "../components/SignIn";
 import PrivateRoute from "./PrivateRoute";
+import UploadLostItem from "../components/UploadLostItem";
 
 const router = createBrowserRouter([
    {
@@ -56,6 +57,12 @@ const router = createBrowserRouter([
     </PrivateRoute>
   ),
   loader: ({ params }) => fetch(`https://whereisit-server-side-eta.vercel.app/additems/${params.id}`)
+},
+{
+path:'FindItems',
+element: <PrivateRoute>
+  <UploadLostItem></UploadLostItem>
+</PrivateRoute>
 },
 
      

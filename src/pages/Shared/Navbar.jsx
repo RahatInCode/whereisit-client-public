@@ -80,6 +80,18 @@ const Navbar = () => {
           Recovered
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to="/FindItems"
+          className={({ isActive }) => 
+            isActive
+              ? "text-primary font-semibold underline underline-offset-4"
+              : "text-gray-700 dark:text-gray-300 hover:text-orange-500 transition"
+          }
+        >
+          Find Items
+        </NavLink>
+      </li>
     </>
   );
 
